@@ -11,10 +11,6 @@ public class Quiz {
 
     private String title;
 
-    private String showProgressBar;
-
-    private String showTimerPanel;
-
     private double maxTimeToFinish;
 
     private List<Page> pages;

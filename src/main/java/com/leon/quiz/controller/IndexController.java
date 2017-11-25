@@ -42,7 +42,7 @@ public class IndexController {
         }
 
         Quiz.Page page = new Quiz.Page(questionDTOs);
-        return new Quiz("American History", "bottom", "top", 30, Collections.singletonList(page));
+        return new Quiz("American History", 300, Collections.singletonList(page));
     }
 
 }

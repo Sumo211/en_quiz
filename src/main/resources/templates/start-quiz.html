@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Start Quiz</title>
+    <link rel="stylesheet" href="../static/css/start-quiz.css" th:href="@{/css/start-quiz.css}">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div class="wrap-survey">
+        <div id="divStartQuiz" style="padding:50px">
+            <button class="btn-lg btn-start">
+                <span>Start Quiz</span>
+            </button>
+        </div>
+        <div id="surveyElement">
+        </div>
+    </div>
+    <div id="surveyResult"></div>
+
+</body>
+<script type="text/javascript" src="../static/js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<script type="text/javascript" src="../static/libs/surveyjs/survey.jquery.js" th:src="@{/libs/surveyjs/survey.jquery.js}"></script>
+<script type="text/javascript" src="../static/js/start-quiz.js" th:src="@{/js/start-quiz.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+</script>
+
+</html>
