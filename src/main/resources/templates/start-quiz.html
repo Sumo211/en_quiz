@@ -10,17 +10,32 @@
 </head>
 
 <body>
-
+    <div id="divStartQuiz" style="padding:50px">
+        <button type="button" class="btn btn-lg btn-primary btn-start">
+            <span>Start Quiz</span>
+        </button>
+    </div>
     <div class="wrap-survey">
-        <div id="divStartQuiz" style="padding:50px">
-            <button class="btn-lg btn-start">
-                <span>Start Quiz</span>
-            </button>
-        </div>
         <div id="surveyElement">
         </div>
     </div>
-    <div id="surveyResult"></div>
+    <div id="surveyResult" style="display: none;">
+        <div id="alert-success" class="alert alert-success" role="alert">
+            <h3 class="alert-heading">Quiz Done!</h3>
+            <p>You are finish Quiz successful.</p>
+            <p>Thank you for your time.</p>
+            <hr>
+            <h4>Result</h4>
+            <p class="mb-0">Total answers correct: <span class="numOfRightAnswers"></span></p>
+            <p class="mb-0">Total questions: <span class="totalQuestion"></span></p>
+        </div>
+
+        <div id="alert-danger" class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Error</h4>
+            <p>Something wrong!</p>
+            <p>Please take the Quiz in anothertime.</p>
+        </div>
+    </div>
 
 </body>
 <script type="text/javascript" src="../static/js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"></script>

@@ -13,7 +13,7 @@ Survey.defaultBootstrapCss.navigationButton = "btn btn-green";
 //     timerLimitSurvey: "Bạn đã tốn {0} trong tổng số {1}.",
 // };
 
-$(document).ready(function() {
+$(document).ready(function () {
 
     //Get data for survey
     dataSurvey = getDataSurvey();
@@ -28,25 +28,22 @@ $(document).ready(function() {
     survey.showTimerPanelMode = "survey";
 
     //Start Survey
-    $(".btn-start").click(function() {
+    $(".btn-start").click(function () {
         $("#divStartQuiz").css("display", "none");
-
+        $("body").addClass("taking-quiz");
         $("#surveyElement").Survey({
             model: survey
         });
     });
 
     //On Survey complete
-    survey.onComplete.add(function(result) {
+    survey.onComplete.add(function (result) {
         $(".wrap-survey").hide();
-
         var data = new Object();
         // data.result = result.data;
         data["result"] = converResultData(result.data);
-        data["userId"] = 10;
-
         data["userId"] = 1;
-        $("#surveyResult").html("Result: " + JSON.stringify(data));
+        
 
         console.log("Result posst: ", data);
         postResult(data);
@@ -59,48 +56,49 @@ function converResultData(data) {
 
     for (var key in data) {
         if (data.hasOwnProperty(key)) {
-            console.log("Key: " + key);
             var question = new Object();
             question["questionId"] = key;
 
             let values = data[key];
-
-
-
             if (typeof values === "string") {
                 question["answerIds"] = values;
             } else if (typeof values === "object") {
-                console.log("is Array: " + values.length);
                 question["answerIds"] = values.join();
             }
             quizResults.push(question);
         }
     }
-    console.log("11111: ", quizResults);
     return quizResults;
 }
 
 function getDataSurvey() {
     var json;
     $.ajaxSetup({ async: false });
-    $.get(urlGetDataSurvey, function(data, status) {
+    $.get(urlGetDataSurvey, function (data, status) {
         json = data;
     });
     return json;
 }
 
 function postResult(data) {
+    $("body").removeClass("taking-quiz");
+    $("#surveyResult").show();
     $.ajax({
         "type": "POST",
         "url": "/quiz-result",
         "dataType": "json",
         "contentType": "application/json; charset=utf-8",
-        "data": JSON.stringify(data), // serializes the form's elements.
-        "success": function(dataReturn) {
+        "data": JSON.stringify(data),
+        "success": function (dataReturn) {
             console.log("data: ", dataReturn);
+
+            $(".numOfRightAnswers").html(dataReturn.numOfRightAnswers);
+            $(".totalQuestion").html(dataReturn.totalQuestions);
+            $("#alert-success").show();
         },
-        "error": function() {
+        "error": function () {
             console.log("Error...");
+            $("#alert-danger").show();
         }
     });
 }
