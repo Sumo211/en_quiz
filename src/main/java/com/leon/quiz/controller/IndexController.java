@@ -9,10 +9,9 @@ import com.leon.quiz.service.QuizService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class IndexController {
@@ -24,23 +23,33 @@ public class IndexController {
     }
 
     @GetMapping("test")
-    public Quiz test() throws IOException {
+    public Quiz test(HttpSession session) throws IOException {
         List<Question> questions = quizService.generateQuiz(10);
+        Map<String, List<String>> result = new HashMap<>();
         List<QuestionDTO> questionDTOs = new ArrayList<>();
+
         QuestionDTO questionDTO;
         for (Question question : questions) {
             questionDTO = new QuestionDTO(question.getType().toString().toLowerCase(), String.valueOf(question.getId()), question.getContent());
             List<Answer> answers = question.getAnswers();
             List<AnswerDTO> answerDTOs = new ArrayList<>();
+            List<String> rightAnswers = new ArrayList<>();
+
             AnswerDTO answerDTO;
             for (Answer answer : answers) {
                 answerDTO = new AnswerDTO(String.valueOf(answer.getId()), answer.getContent());
                 answerDTOs.add(answerDTO);
+
+                if (answer.isCorrect()) {
+                    rightAnswers.add(answer.getId().toString());
+                }
             }
             questionDTO.setChoices(answerDTOs);
             questionDTOs.add(questionDTO);
+            result.put(question.getId().toString(), rightAnswers);
         }
 
+        session.setAttribute("quizResult", result);
         Quiz.Page page = new Quiz.Page(questionDTOs);
         return new Quiz("American History", 300, Collections.singletonList(page));
     }

@@ -23,7 +23,7 @@ public class EnglishQuizApplication extends SpringBootServletInitializer {
 
     @Bean
     ApplicationRunner applicationRunner(ExcelConverterService converterService) {
-        return args -> converterService.importQuestions(new ClassPathResource("sample_data_old.xlsx").getFile());
+        return args -> converterService.importQuestions(new ClassPathResource("sample_data.xlsx").getFile());
     }
 
 }

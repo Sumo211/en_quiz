@@ -10,7 +10,6 @@ public class QuestionLevelConverter implements AttributeConverter<Level, String>
 
     @Override
     public String convertToDatabaseColumn(Level level) {
-        
         return level.getShortName();
     }
 
