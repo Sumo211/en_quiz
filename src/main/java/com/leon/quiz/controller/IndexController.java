@@ -25,7 +25,7 @@ public class IndexController {
 
     @GetMapping("test")
     public Quiz test() throws IOException {
-        List<Question> questions = quizService.generateQuiz(2);
+        List<Question> questions = quizService.generateQuiz(10);
         List<QuestionDTO> questionDTOs = new ArrayList<>();
         QuestionDTO questionDTO;
         for (Question question : questions) {
